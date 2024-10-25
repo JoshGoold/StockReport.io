@@ -2,13 +2,18 @@ const express = require("express")
 const cors = require("cors")
 require("dotenv").config()
 const mongoose = require("mongoose")
-const app = express()
-const compose = require("./utils/compose_data")
+const path = require('path')
+const fs = require('fs')
 const route = require('./routes/server/route')
+const app = express()
+const clearDir = require('./utils/clear_directory')
+
+
 
 app.use(cors())
 app.use(express.json())
-app.use('/', route)
+app.use("/", route)
+
 
 const port = process.env.EXPRESS_PORT||8050
 
@@ -19,14 +24,24 @@ mongoose
     console.log("Server Starting..")
     console.log("Server Starting.")
     app.listen(port, ()=> console.log(`Server Started Successfully!\nhttp://localhost:${port}`))
-    // compose()
+    clearDir()
+    
 })
 .catch(e =>{
     console.error(`Error connecting to database: ${e}`)
 })
 
+const filepath = path.join(__dirname, "html", "index.html")
+
 app.get("/", (req,res)=>{
-    res.send("Welcome to Stock Analysis Plus")
+    fs.readFile(filepath, "utf-8", (err, data)=>{
+        if(err){
+            res.status(500).send('Error reading html')
+            console.error(`Error reading index.thml file : ${err}`)
+            return;
+        }
+        res.send(data)
+    })
 })
 
 

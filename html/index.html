@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .download-btn {
+            background-color: #007bff;
+        }
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            text-align: center;
+            margin-top: 10px;
+            color: #d9534f; /* Bootstrap danger color */
+        }
+    </style>
+</head>
+<body>
+    <h1>Get Stock Report</h1>
+    <div class="container">
+        <form id="stockForm" onsubmit="submitForm(event)">
+            <label for="symbol">Enter Stock Symbol:</label>
+            <input type="text" id="symbol" name="symbol" required>
+            <button type="submit">Get Stock Report</button>
+        </form>
+        <button class="download-btn" onclick="window.location.href='http://localhost:8050/download-report'">Download Report</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+            const symbol = document.getElementById("symbol").value;
+
+            try {
+                const response = await fetch("http://localhost:8050/get-stock-report", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ symbol }) // Send the symbol in the request body
+                });
+
+                const messageDiv = document.getElementById("message");
+
+                if (response.ok) {
+                    const data = await response.json(); // Handle the response data if needed
+                    console.log(data);
+                    messageDiv.textContent = "Stock report generated successfully!";
+                    messageDiv.style.color = "#5cb85c"; // Change text color to green for success
+                } else {
+                    messageDiv.textContent = "Error: " + response.statusText;
+                    messageDiv.style.color = "#d9534f"; // Change text color to red for error
+                }
+            } catch (error) {
+                console.error("Error fetching stock report:", error);
+                const messageDiv = document.getElementById("message");
+                messageDiv.textContent = "Error fetching stock report: " + error.message;
+                messageDiv.style.color = "#d9534f"; // Change text color to red for error
+            }
+        }
+    </script>
+</body>
+</html>
