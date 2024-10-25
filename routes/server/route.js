@@ -19,10 +19,7 @@ route.post("/get-stock-report", async (req, res) => {
         try {
             await compose(symbol); // Wait for compose to finish
             await compose_document(); // Wait for document finalization
-
-            // Read the stock report file
-            const data = await fs.readFile(filePath, "utf-8"); // Use await to read the file
-            res.send(data); // Send the file data back to the client
+            res.send("Report Proccessed"); // Send success message 
         } catch (error) {
             console.error(`Error occurred: ${error.message}`);
             res.status(500).send("Server Error: failed to compose documents or read file");
