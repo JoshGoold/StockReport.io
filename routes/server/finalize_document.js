@@ -20,16 +20,16 @@ const funcs = {
     "WinnersLosers": processWinLoss
 };
 
-async function create_Documents(){
-    Object.entries(funcs).forEach( async ([key, handler]) => {
+async function create_Documents() {
+    for (const [key, handler] of Object.entries(funcs)) {
         try {
-            const data = await handler(); 
-            append_Finalized(filePath, data)
+            const data = await handler(); // Wait for the handler to complete
+            append_Finalized(filePath, data); // Append the finalized data
         } catch (error) {
             console.error(`Error occurred while creating document - ${key} function: ${error}`);
-            res.status(500).send(`Error processing ${key}`);
+            throw new Error(`Error processing ${key}`); // Rethrow error to be caught in the route
         }
-    });
+    }
 }
 
 
