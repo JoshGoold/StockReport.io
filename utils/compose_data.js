@@ -9,7 +9,7 @@ const funcs = [sentiment, earnings, global_quotes, overview, winners_losers]
 
 async function compose(SYMBOL){
   for(const fn of funcs){
-    fn(SYMBOL)
+    await fn(SYMBOL)
   }
 }
 
