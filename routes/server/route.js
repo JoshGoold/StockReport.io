@@ -19,7 +19,7 @@ const routes = {
 Object.entries(routes).forEach(([key, handler]) => {
     route.get(`/${key}`, async (req, res) => {
         try {
-            const data = await handler(); // Assuming each handler returns data
+            const data = await handler(); 
             res.send(data);
         } catch (error) {
             console.error(`Error occurred while creating Route - ${key} function: ${error}`);
