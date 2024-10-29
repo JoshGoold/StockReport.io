@@ -4,13 +4,17 @@ const fileName = "GlobalQuote";
 const basePath = path.join(__dirname, "..", "..")
 const filePath = path.join(basePath, "documents", `${fileName}.txt`)
 
-function fetch_global(SYMBOL){
-   fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${SYMBOL}&apikey=${process.env.API_KEY}`)
-    .then(res => res.json())
-    .then(data => {
-        traverseAndAppend(data, "", filePath);
-    })
-    .catch(e => console.error(`Error fetching (Global Quote Data): ${e}`))  
+async function fetch_global(SYMBOL){
+    try {
+      const res = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${SYMBOL}&apikey=${process.env.API_KEY}`)
+      const data = await res.json()
+      await traverseAndAppend(data, "", filePath);  
+    } catch (error) {
+        console.error(`Error fetching (Global Quote Data): ${error}`)
+    }
+   
+    
+      
 }
 
 

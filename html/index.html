@@ -70,7 +70,7 @@
             <input type="text" id="symbol" name="symbol" required>
             <button type="submit">Get Stock Report</button>
         </form>
-        <button class="download-btn" onclick="window.location.href='http://localhost:8050/download-report'">Download Report</button>
+        <button id="btn" class="download-btn" onclick="window.location.href='http://localhost:8050/download-report'">Download Report</button>
         <div id="message" class="message"></div>
     </div>
 
@@ -93,8 +93,9 @@
                 if (response.ok) {
                     const data = await response.json(); // Handle the response data if needed
                     console.log(data);
-                    messageDiv.textContent = "Stock report generated successfully!";
+                    messageDiv.textContent = data.Message;
                     messageDiv.style.color = "#5cb85c"; // Change text color to green for success
+                    count_down()
                 } else {
                     messageDiv.textContent = "Error: " + response.statusText;
                     messageDiv.style.color = "#d9534f"; // Change text color to red for error
@@ -106,6 +107,23 @@
                 messageDiv.style.color = "#d9534f"; // Change text color to red for error
             }
         }
+    function count_down() {
+        let secondsRemaining = 5;
+        const message = document.getElementById('message')
+
+        const intervalId = setInterval(() => {
+          // Output the countdown time
+        secondsRemaining -= 1;
+            message.textContent = `${secondsRemaining}s remaining`
+        if (secondsRemaining < 0) {
+            clearInterval(intervalId);   // Stop the countdown when it reaches 0
+            message.textContent = "Stock Report compose compelete!"
+            download_btn.style.display = "block"
+        }
+    }, 1000);  
+}
+        const download_btn = document.getElementById("btn")
+        download_btn.style.display = "block";
     </script>
 </body>
 </html>

@@ -2,7 +2,6 @@ const express = require("express");
 const path = require('path');
 const fs = require('fs').promises; // Use fs.promises for promise-based functions
 const compose = require("../../utils/compose_data");
-const compose_document = require('./finalize_document');
 const clear_directory = require('../../utils/clear_directory')
 
 const route = express.Router();
@@ -17,15 +16,14 @@ route.post("/get-stock-report", async (req, res) => {
     // Check if symbol is provided
     if (symbol && symbol.length > 0) {
         try {
-            await compose(symbol); // Wait for compose to finish
-            await compose_document(); // Wait for document finalization
-            res.json("Report Proccessed"); // Send success message 
+            compose(symbol); // Wait for compose to finish
+            res.send({Success: true, Message: "Report composed successfully!"}) // Send success message 
         } catch (error) {
             console.error(`Error occurred: ${error.message}`);
-            res.status(500).send("Server Error: failed to compose documents or read file");
+            res.status(500).send({Sucess: false, Message: "Server Error: failed to compose documents or read file"});
         }
     } else {
-        res.status(400).send("Bad Request: Symbol is required");
+        res.status(400).send({Success: false, Message:"Bad Request: Symbol is required"});
     }
 });
 
@@ -36,7 +34,7 @@ route.get("/download-report", (req, res) => {
             console.error(`Error downloading file: ${err}`);
             res.status(500).send("Error downloading file");
         }
-        clear_directory()
+        // clear_directory()
     });
 });
 

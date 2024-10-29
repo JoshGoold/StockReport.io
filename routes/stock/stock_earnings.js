@@ -4,13 +4,15 @@ const fileName = "Earnings";
 const basePath = path.join(__dirname, "..", "..")
 const filePath = path.join(basePath, "documents", `${fileName}.txt`)
 
-function fetch_earnings(SYMBOL) {
-   fetch(`https://www.alphavantage.co/query?function=EARNINGS&symbol=${SYMBOL}&apikey=${process.env.API_KEY}`)
-       .then(res => res.json())
-       .then(data => {
-           traverseAndAppend(data, "", filePath);
-       })
-       .catch(e => console.error(`Error fetching (Earnings Data): ${e}`));
+async function fetch_earnings(SYMBOL) {
+    try {
+      const res = await fetch(`https://www.alphavantage.co/query?function=EARNINGS&symbol=${SYMBOL}&apikey=${process.env.API_KEY}`);
+      const data = await res.json();
+      await traverseAndAppend(data, "", filePath);  
+    } catch (error) {
+        console.error(`error fetching earnings: ${error}`)
+    }
+    
 }
 
 
