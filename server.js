@@ -8,6 +8,8 @@ const route = require('./routes/server/route')
 const app = express()
 const clearDir = require('./utils/clear_directory')
 
+app.use(express.static(path.join(__dirname, "html")));
+
 
 
 app.use(cors())
@@ -34,14 +36,7 @@ const port = process.env.EXPRESS_PORT||8050
 const filepath = path.join(__dirname, "html", "index.html")
 
 app.get("/", (req,res)=>{
-    fs.readFile(filepath, "utf-8", (err, data)=>{
-        if(err){
-            res.status(500).send('Error reading html')
-            console.error(`Error reading index.thml file : ${err}`)
-            return;
-        }
-        res.send(data)
-    })
+    res.sendFile(path.join(__dirname, "html", "index.html"));
 })
 
 
