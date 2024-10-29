@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 COPY app /app
 
 # Install dependencies and run builds
-RUN cd /app/api && npm install --production
+RUN cd /app && npm install --production
 
 # Stage 2: Final Stage - production
 FROM node:18.19.1-slim
