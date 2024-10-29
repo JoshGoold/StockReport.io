@@ -17,19 +17,19 @@ app.use("/", route)
 
 const port = process.env.EXPRESS_PORT||8050
 
-mongoose
-.connect(process.env.DB_CONNECT)
-.then(()=>{
-    console.log("Database Initialized\nServer Starting...")
-    console.log("Server Starting..")
-    console.log("Server Starting.")
+// mongoose
+// .connect(process.env.DB_CONNECT)
+// .then(()=>{
+//     console.log("Database Initialized\nServer Starting...")
+//     console.log("Server Starting..")
+//     console.log("Server Starting.")
     app.listen(port, ()=> console.log(`Server Started Successfully!\nhttp://localhost:${port}`))
     clearDir()
     
-})
-.catch(e =>{
-    console.error(`Error connecting to database: ${e}`)
-})
+// })
+// .catch(e =>{
+//     console.error(`Error connecting to database: ${e}`)
+// })
 
 const filepath = path.join(__dirname, "html", "index.html")
 
