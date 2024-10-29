@@ -67,7 +67,7 @@
     <div class="container">
         <form id="stockForm" onsubmit="submitForm(event)">
             <label for="symbol">Enter Stock Symbol:</label>
-            <input type="text" id="symbol" name="symbol" required>
+            <input type="text" id="symbol" name="symbol" placeholder="Enter Symbol (Ex. AAPL)" required>
             <button type="submit">Get Stock Report</button>
         </form>
         <button id="btn" class="download-btn" onclick="window.location.href='http://localhost:8050/download-report'">Download Report</button>
@@ -123,7 +123,7 @@
     }, 1000);  
 }
         const download_btn = document.getElementById("btn")
-        download_btn.style.display = "block";
+        download_btn.style.display = "none";
     </script>
 </body>
 </html>
