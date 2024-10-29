@@ -37,7 +37,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Finish | Set WORKDIR and expose dashboard port
 WORKDIR /app/
-EXPOSE 8500
+EXPOSE 8050
 
 # Start Supervisor to manage Node.js services
 CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
