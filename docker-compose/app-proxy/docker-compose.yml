@@ -13,3 +13,8 @@ services:
     volumes:
       - /var/container-volumes/proxy-manager/data:/data
       - /var/container-volumes/proxy-manager/letsencrypt:/etc/letsencrypt  
+    networks:
+      - my_network  # Add to the shared network 
+
+networks:
+  my_network:
