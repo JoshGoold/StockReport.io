@@ -23,7 +23,7 @@ const port = process.env.EXPRESS_PORT||8050
 //     console.log("Database Initialized\nServer Starting...")
 //     console.log("Server Starting..")
 //     console.log("Server Starting.")
-    app.listen(port, ()=> console.log(`Server Started Successfully!\nhttp://localhost:${port}`))
+    app.listen(port, '0.0.0.0', ()=> console.log(`Server Started Successfully!\nhttp://localhost:${port}`))
     clearDir()
     
 // })
